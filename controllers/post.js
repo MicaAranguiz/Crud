@@ -20,7 +20,6 @@ exports.getAllPosts = async (req, res) => {
 exports.createPost = async (req, res) => {
     try {
         const { descripcion, fecha, imagen, ubicacion, userId } = req.body
-
         const post = await Post.create(req.body);
         res.status(201).json({
             ok: true,
@@ -29,7 +28,8 @@ exports.createPost = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.status(500).json({
-            message: 'server error'
+            message: 'server error',
+            error
         })
 
     }
@@ -71,12 +71,12 @@ exports.updatePost = async (req, res) => {
 
 exports.deletePost = async (req, res) => {
 
-    const { id } = req.params;
+    const {id} = req.params;
 
 
     try {
 
-        const post = await Post.destroy({ where: { id: id } })
+        const post = await Post.destroy({where: {id: id}})
 
         res.status(201).json({
             ok: true,

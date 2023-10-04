@@ -1,7 +1,6 @@
 const User = require('../models/user')
 const Post = require('../models/post')
 
-
 exports.getAllUsers = async (req, res) => {
 
     try {
@@ -16,6 +15,23 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({
             message: 'Error al obtener los usuarios',
         })
+    }
+}
+
+exports.createUser = async (req, res) => {
+    try {
+        const { username, password, email } = req.body
+        const user = await User.create(req.body);
+        res.status(201).json({
+            ok: true,
+            user
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            message: 'server error'
+        })
+
     }
 }
 
@@ -37,24 +53,6 @@ exports.getUserPosts = async(req, res)=>{
     
 }
 
-
-exports.createUser = async (req, res) => {
-    try {
-        const { username, password, email } = req.body
-        const user = await User.create(req.body);
-        res.status(201).json({
-            ok: true,
-            user
-        })
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({
-            message: 'server error'
-        })
-
-    }
-}
-
 exports.updateUser = async (req, res) => {
    
     const {id} = req.params
@@ -69,7 +67,7 @@ exports.updateUser = async (req, res) => {
         }
         else{
             res.status(404).json({
-                msg: "no existe usuario con ese id"
+                msg: "no existe usurio con ese id"
             })
         }
 
